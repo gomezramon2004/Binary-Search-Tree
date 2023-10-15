@@ -12,12 +12,13 @@ class Node {
 class BST {
     private:
         int currentLength;
-        Node* front;
-        Node* rear;
+        Node* root;
+        void compareNodes(Node* currentNode, Node* newNode);
     public:
         BST();
-        void push(int data);
-        void pop();
+        void insertNode(int data);
+        int searchNode(int data);
+        void deleteNode(int data);
         int top(); 
         bool empty();
         bool full();
