@@ -3,13 +3,10 @@
 #include <iostream>
 #include <queue>
 
-// Implementation of queue Methods
+// Constructor of Node
 Node::Node(int data) : data(data), level(0), left(nullptr), right(nullptr), prev(nullptr) {}
 
-
-// Implementation of BST Methods
-
-// Helper function for compare nodes
+// Compare nodes in BST
 void BST::compareNodes(Node* currentNode, Node* newNode) {
     if (root->data == newNode->data) throw std::runtime_error("ERROR: Node already exists");
 
@@ -32,7 +29,7 @@ void BST::compareNodes(Node* currentNode, Node* newNode) {
     }
 }
 
-// Helper function for search node
+// Search node in BST
 Node* BST::searchNode(int data, Node* currentNode, bool isLevel) {
     if (!currentNode) {
         if (!isLevel) throw std::runtime_error("ERROR: Node not found");
@@ -50,8 +47,7 @@ Node* BST::searchNode(int data, Node* currentNode, bool isLevel) {
     }
 }
 
-// Helper function for delete node
-
+// Delete leaf node
 void BST::deleteLeaftNode(Node* currentNode) {
     if (currentNode == root) {
         root = nullptr;
@@ -63,18 +59,21 @@ void BST::deleteLeaftNode(Node* currentNode) {
     delete currentNode;
 }
 
+// Delete node with left child
 void BST::deleteNodeWithLeftChild(Node* currentNode) {
     currentNode->left->prev = currentNode->prev;
     currentNode->prev->left == currentNode ? currentNode->prev->left = currentNode->left : currentNode->prev->right = currentNode->left;
     delete currentNode;
 }
 
+// Delete node with right child
 void BST::deleteNodeWithRightChild(Node* currentNode) {
     currentNode->right->prev = currentNode->prev;
     currentNode->prev->left == currentNode ? currentNode->prev->left = currentNode->right : currentNode->prev->right = currentNode->right;
     delete currentNode;
 }
 
+// Delete node with two children
 void BST::deleteNodeWithTwoChildren(Node* currentNode) {
     Node* minRightNode = minRight(currentNode);
     currentNode->data = minRightNode->data;
@@ -89,6 +88,7 @@ void BST::deleteNodeWithTwoChildren(Node* currentNode) {
     delete minRightNode;
 }
 
+// Calculate min right node
 Node* BST::minRight(Node* currentNode) {
     Node* temp = currentNode->right;
     while (temp->left) {
@@ -97,6 +97,7 @@ Node* BST::minRight(Node* currentNode) {
     return temp;
 }
 
+// Calculate height of BST
 int BST::calculateHeight(Node* currentNode) {
     if (!currentNode) return 0;
     int leftHeight = calculateHeight(currentNode->left);
@@ -104,6 +105,7 @@ int BST::calculateHeight(Node* currentNode) {
     return 1 + std::max(leftHeight, rightHeight);
 }
 
+// Helper function for preorder
 void BST::preorder(Node* currentNode) {
     if (!currentNode) return;
     std::cout << currentNode->data << " ";
@@ -111,6 +113,7 @@ void BST::preorder(Node* currentNode) {
     preorder(currentNode->right);
 }
 
+// Helper function for inorder
 void BST::inorder(Node* currentNode) {
     if (!currentNode) return;
     inorder(currentNode->left);
@@ -118,6 +121,7 @@ void BST::inorder(Node* currentNode) {
     inorder(currentNode->right);
 }
 
+// Helper function for postorder
 void BST::postorder(Node* currentNode) {
     if (!currentNode) return;
     postorder(currentNode->left);
@@ -125,6 +129,7 @@ void BST::postorder(Node* currentNode) {
     std::cout << currentNode->data << " ";
 }
 
+// Helper function for level by level
 void BST::levelByLevel(Node* currentNode) {
     if (!currentNode) return;
     std::queue<Node*> q;
@@ -142,7 +147,7 @@ void BST::levelByLevel(Node* currentNode) {
     std::cout << std::endl;
 }
 
-// Constructor
+// Constructor of BST
 BST::BST() : currentLength(0), root(nullptr) {}
 
 // Insert node to BST
@@ -219,6 +224,7 @@ int BST::height() {
     return currentHeight;
 }
 
+// Get ancestors of a node
 void BST::ancestors(int data) {
     Node* currentNode = searchNode(data, root, false);
     std::cout << currentNode->data;
