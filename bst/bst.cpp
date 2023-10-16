@@ -105,13 +105,13 @@ Node* BST::minRight(Node* currentNode) {
     return temp;
 }
 
-void BST::updateDecrementedHeight(Node* currentNode) {
-    if (!currentNode) return;
-    int leftHeight = currentNode->left ? currentNode->left->level : 0;
-    int rightHeight = currentNode->right ? currentNode->right->level : 0;
-    currentNode->level = std::max(leftHeight, rightHeight) + 1;
-    currentHeight = std::max(currentHeight, currentNode->level);
-    updateDecrementedHeight(currentNode->prev);
+int BST::calculateHeight(Node* currentNode) {
+    if (!currentNode) {
+        return 0;
+    }
+    int leftHeight = calculateHeight(currentNode->left);
+    int rightHeight = calculateHeight(currentNode->right);
+    return 1 + std::max(leftHeight, rightHeight);
 }
 
 void BST::preorder(Node* currentNode) {
@@ -170,7 +170,7 @@ void BST::insertNode(int data) {
 // Delete node to BST
 void BST::deleteNode(int data) {      
     if (empty()) {
-        throw std::runtime_error("ERROR: Priority Queue is empty");
+        throw std::runtime_error("ERROR: BST is empty");
     }
 
     Node* currentNode = searchNode(data, root, false);
@@ -186,12 +186,14 @@ void BST::deleteNode(int data) {
             deleteNodeWithRightChild(currentNode);
         }        
     }
+    currentHeight = calculateHeight(root);
+    currentLength--;
 }
 
 // Peeking at top of BST
 int BST::top() {                                                          
     if (empty()) { 
-        throw std::runtime_error("ERROR: Priority Queue is empty");
+        throw std::runtime_error("ERROR: BST is empty");
     }
     return root->data;
 }

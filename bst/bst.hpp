@@ -14,6 +14,7 @@ class BST {
     private:
         int currentLength;
         int currentHeight;
+        Node* root;
         void compareNodes(Node* currentNode, Node* newNode);
         Node* searchNode(int data, Node* currentNode, bool isLevel);
         void deleteLeaftNode(Node* currentNode);
@@ -21,14 +22,13 @@ class BST {
         void deleteNodeWithRightChild(Node* currentNode);
         void deleteNodeWithTwoChildren(Node* currentNode);
         Node* minRight(Node* currentNode);
-        void updateDecrementedHeight(Node* currentNode);
+        int calculateHeight(Node* currentNode);
         void preorder(Node* currentNode);
         void inorder(Node* currentNode);
         void postorder(Node* currentNode);
         void levelByLevel(Node* currentNode);
     public:
         BST();
-        Node* root;
         void insertNode(int data);
         void deleteNode(int data);
         int top(); 
