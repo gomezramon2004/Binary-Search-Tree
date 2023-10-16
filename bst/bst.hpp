@@ -22,6 +22,10 @@ class BST {
         void deleteNodeWithTwoChildren(Node* currentNode);
         Node* minRight(Node* currentNode);
         void updateDecrementedHeight(Node* currentNode);
+        void preorder(Node* currentNode);
+        void inorder(Node* currentNode);
+        void postorder(Node* currentNode);
+        void levelByLevel(Node* currentNode);
     public:
         BST();
         Node* root;

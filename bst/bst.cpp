@@ -113,6 +113,27 @@ void BST::updateDecrementedHeight(Node* currentNode) {
     updateDecrementedHeight(currentNode->prev);
 }
 
+void BST::preorder(Node* currentNode) {
+    if (!currentNode) return;
+    std::cout << currentNode->data << " ";
+    preorder(currentNode->left);
+    preorder(currentNode->right);
+}
+
+void BST::inorder(Node* currentNode) {
+    if (!currentNode) return;
+    inorder(currentNode->left);
+    std::cout << currentNode->data << " ";
+    inorder(currentNode->right);
+}
+
+void BST::postorder(Node* currentNode) {
+    if (!currentNode) return;
+    postorder(currentNode->left);
+    postorder(currentNode->right);
+    std::cout << currentNode->data << " ";
+}
+
 // Constructor
 BST::BST() : currentLength(0), root(nullptr) {}
 
@@ -169,7 +190,18 @@ int BST::size() {
 
 // Visit a node by certain mode
 void BST::visit(int key) {
-
+    switch (key) {
+        case 1:
+            return preorder(root);
+        case 2:
+            return inorder(root);
+        case 3:
+            return postorder(root);
+        case 4:
+            return levelByLevel(root);
+        default:
+            throw std::runtime_error("ERROR: Key is not valid");
+    };
 }
 
 // Get height of BST
