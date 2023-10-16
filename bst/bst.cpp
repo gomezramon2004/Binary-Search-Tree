@@ -1,6 +1,7 @@
 #include "bst.hpp"
 #include <algorithm> 
 #include <iostream>
+#include <queue>
 
 // Implementation of queue Methods
 Node::Node(int data) : data(data), level(0), left(nullptr), right(nullptr), prev(nullptr) {}
@@ -134,6 +135,23 @@ void BST::postorder(Node* currentNode) {
     std::cout << currentNode->data << " ";
 }
 
+void BST::levelByLevel(Node* currentNode) {
+    if (!currentNode) return;
+    std::queue<Node*> q;
+    q.push(currentNode);
+    while (!q.empty()) {
+        int n = q.size();
+        for (size_t i = 0; i < n; ++i) {
+            Node* temp = q.front();
+            q.pop();
+            std::cout << temp->data << " ";
+            if (temp->left) q.push(temp->left);
+            if (temp->right) q.push(temp->right);
+        }
+    }
+    std::cout << std::endl;
+}
+
 // Constructor
 BST::BST() : currentLength(0), root(nullptr) {}
 
@@ -192,11 +210,17 @@ int BST::size() {
 void BST::visit(int key) {
     switch (key) {
         case 1:
-            return preorder(root);
+            preorder(root);
+            std::cout << std::endl;
+            return;
         case 2:
-            return inorder(root);
+            inorder(root);
+            std::cout << std::endl;
+            return;
         case 3:
-            return postorder(root);
+            postorder(root);
+            std::cout << std::endl;
+            return;
         case 4:
             return levelByLevel(root);
         default:
