@@ -15,6 +15,7 @@ int main() {
         bst.insertNode(25);
         bst.insertNode(40);
         bst.insertNode(1);
+        bst.deleteNode(1);
 
         std::cout << "Top: " << bst.root->data << std::endl;
         std::cout << bst.root->left->data << std::endl;
@@ -25,7 +26,11 @@ int main() {
         std::cout << bst.root->right->right->data << std::endl;
 
         std::cout << bst.height() << std::endl;
-        std::cout << bst.whatlevelamI() << std::endl;
+        std::cout << bst.whatlevelamI(1) << std::endl;
+        std::cout << bst.whatlevelamI(18) << std::endl;
+        std::cout << bst.whatlevelamI(40) << std::endl;
+
+        bst.ancestors(1);
 
     } catch (const std::runtime_error &e) {
         std::cerr << e.what() << std::endl;

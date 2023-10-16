@@ -34,15 +34,20 @@ void BST::compareNodes(Node* currentNode, Node* newNode) {
 }
 
 // Helper function for search node
-Node* BST::searchNode(int data, Node* currentNode) {
-    if (currentNode->data == data) {
-        return currentNode;
-    } else if (data > currentNode->data) {
-        return searchNode(data, currentNode->right);
-    } else if (data < currentNode->data) {
-        return searchNode(data, currentNode->left);
+Node* BST::searchNode(int data, Node* currentNode, bool isLevel) {
+    if (!currentNode) {
+        if (!isLevel) throw std::runtime_error("ERROR: Node not found");
+        Node* temp = new Node(data);
+        temp->level = -1;
+        return temp;
+    }
+    
+    if (currentNode->data == data) { 
+        return currentNode; 
+    } else if (data > currentNode->data) { 
+        return searchNode(data, currentNode->right, isLevel); 
     } else {
-        throw std::runtime_error("ERROR: Node not found");
+        return searchNode(data, currentNode->left, isLevel); 
     }
 }
 
@@ -100,9 +105,7 @@ Node* BST::minRight(Node* currentNode) {
 }
 
 void BST::updateDecrementedHeight(Node* currentNode) {
-    if (!currentNode) {
-        return;
-    }
+    if (!currentNode) return;
     int leftHeight = currentNode->left ? currentNode->left->level : 0;
     int rightHeight = currentNode->right ? currentNode->right->level : 0;
     currentNode->level = std::max(leftHeight, rightHeight) + 1;
@@ -131,14 +134,7 @@ void BST::deleteNode(int data) {
         throw std::runtime_error("ERROR: Priority Queue is empty");
     }
 
-    Node* currentNode = root;                                        // Find the node to delete
-    while (currentNode && currentNode->data != data) {
-        if (data > currentNode->data) {
-            currentNode = currentNode->right;
-        } else {
-            currentNode = currentNode->left;
-        }
-    }
+    Node* currentNode = searchNode(data, root, false);
 
     if (!currentNode->left && !currentNode->right) {                // Delete a leaf node           
         deleteLeaftNode(currentNode);
@@ -171,13 +167,28 @@ int BST::size() {
     return currentLength;
 }
 
+// Visit a node by certain mode
+void BST::visit(int key) {
+
+}
+
 // Get height of BST
 int BST::height() {
     return currentHeight;
 }
 
+void BST::ancestors(int data) {
+    Node* currentNode = searchNode(data, root, false);
+    std::cout << currentNode->data;
+    while (currentNode->prev) {
+        std::cout << " <- " << currentNode->prev->data;
+        currentNode = currentNode->prev;
+    }
+    std::cout << std::endl;
+}
+
 // Get the level of a node
 int BST::whatlevelamI(int data) {
-    Node* currentNode = searchNode(data, root);
+    Node* currentNode = searchNode(data, root, true);
     return currentNode->level;
 }
