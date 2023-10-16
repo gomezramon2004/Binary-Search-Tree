@@ -181,6 +181,11 @@ void BST::deleteNode(int data) {
     currentLength--;
 }
 
+// Search node to BST
+bool BST::search(int data) {                                                    
+    return searchNode(data, root, false);
+}
+
 // Peeking at top of BST
 int BST::top() {                                                          
     if (empty()) throw std::runtime_error("ERROR: BST is empty");

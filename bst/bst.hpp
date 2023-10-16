@@ -31,6 +31,7 @@ class BST {
         BST();
         void insertNode(int data);
         void deleteNode(int data);
+        bool search(int data);
         int top(); 
         bool empty();
         int size();
