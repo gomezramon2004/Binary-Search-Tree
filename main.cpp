@@ -35,6 +35,13 @@ int main() {
         bst.ancestors(25);      // Third Case
         bst.ancestors(40);      // Fourth Case
 
+        // What level am I Testcases
+        bst.insertNode(1); 
+        std::cout << bst.whatlevelamI(21) << std::endl; // First Case
+        std::cout << bst.whatlevelamI(13) << std::endl;  // Second Case
+        std::cout << bst.whatlevelamI(10) << std::endl;  // Third Case
+        std::cout << bst.whatlevelamI(1) << std::endl;  // Fourth Case
+
     } catch (const std::runtime_error &e) {
         std::cerr << e.what() << std::endl;
     }
