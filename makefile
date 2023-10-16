@@ -2,9 +2,11 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++17
 TARGET = main
 BSTDIR = bst
+TSTDIR = testcase
 
 SRCS = main.cpp \
-		$(BSTDIR)/bst.cpp
+		$(BSTDIR)/bst.cpp \
+		$(TSTDIR)/testcase.cpp \
 
 EXECUTABLE = a.out
 
