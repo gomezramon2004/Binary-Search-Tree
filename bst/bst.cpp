@@ -11,9 +11,7 @@ Node::Node(int data) : data(data), level(0), left(nullptr), right(nullptr), prev
 
 // Helper function for compare nodes
 void BST::compareNodes(Node* currentNode, Node* newNode) {
-    if (root->data == newNode->data) {
-        throw std::runtime_error("ERROR: Node already exists");
-    }
+    if (root->data == newNode->data) throw std::runtime_error("ERROR: Node already exists");
 
     if (newNode->data > currentNode->data) {
         if (currentNode->right) {
@@ -55,7 +53,9 @@ Node* BST::searchNode(int data, Node* currentNode, bool isLevel) {
 // Helper function for delete node
 
 void BST::deleteLeaftNode(Node* currentNode) {
-   if (currentNode->prev->left == currentNode) {
+    if (currentNode == root) {
+        root = nullptr;
+    } else if (currentNode->prev->left == currentNode) {
         currentNode->prev->left = nullptr;
     } else {
         currentNode->prev->right = nullptr;
@@ -65,21 +65,13 @@ void BST::deleteLeaftNode(Node* currentNode) {
 
 void BST::deleteNodeWithLeftChild(Node* currentNode) {
     currentNode->left->prev = currentNode->prev;
-    if (currentNode->prev->left == currentNode) {
-        currentNode->prev->left = currentNode->left;
-    } else {
-        currentNode->prev->right = currentNode->left;
-    }
+    currentNode->prev->left == currentNode ? currentNode->prev->left = currentNode->left : currentNode->prev->right = currentNode->left;
     delete currentNode;
 }
 
 void BST::deleteNodeWithRightChild(Node* currentNode) {
     currentNode->right->prev = currentNode->prev;
-    if (currentNode->prev->left == currentNode) {
-        currentNode->prev->left = currentNode->right;
-    } else {
-        currentNode->prev->right = currentNode->right;
-    }
+    currentNode->prev->left == currentNode ? currentNode->prev->left = currentNode->right : currentNode->prev->right = currentNode->right;
     delete currentNode;
 }
 
@@ -106,9 +98,7 @@ Node* BST::minRight(Node* currentNode) {
 }
 
 int BST::calculateHeight(Node* currentNode) {
-    if (!currentNode) {
-        return 0;
-    }
+    if (!currentNode) return 0;
     int leftHeight = calculateHeight(currentNode->left);
     int rightHeight = calculateHeight(currentNode->right);
     return 1 + std::max(leftHeight, rightHeight);
@@ -180,11 +170,7 @@ void BST::deleteNode(int data) {
     } else if (currentNode->left && currentNode->right) {           // Delete a node with two children
         deleteNodeWithTwoChildren(currentNode);
     } else {                                                        // Delete a node with one children
-        if (!currentNode->right) {
-            deleteNodeWithLeftChild(currentNode);
-        } else {
-            deleteNodeWithRightChild(currentNode);
-        }        
+        !currentNode->right ? deleteNodeWithLeftChild(currentNode) : deleteNodeWithRightChild(currentNode); 
     }
     currentHeight = calculateHeight(root);
     currentLength--;
@@ -192,9 +178,7 @@ void BST::deleteNode(int data) {
 
 // Peeking at top of BST
 int BST::top() {                                                          
-    if (empty()) { 
-        throw std::runtime_error("ERROR: BST is empty");
-    }
+    if (empty()) throw std::runtime_error("ERROR: BST is empty");
     return root->data;
 }
 
